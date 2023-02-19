@@ -1,17 +1,40 @@
+import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native'
 const PlaceholderImage = require('./assets/images/img1.jpg')
 import ImageViewer from './components/ImageViewer'
+import * as ImagePicker from 'expo-image-picker'
+import Button from './components/Button'
 export default function App() {
+  const [selectedImage, setSelectedImage] = useState(null)
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0].uri)
+    } else {
+      alert('You did not select any image.')
+    }
+  }
   return (
-    <View style={styles.container}>
-      <ImageViewer placeholderImageSource={PlaceholderImage} />
+    <SafeAreaView style={styles.container}>
+      <ImageViewer
+        placeholderImageSource={PlaceholderImage}
+        selectedImage={selectedImage}
+      />
       <View style={styles.footerContainer}>
-        <Button theme="primary" label="Choose a photo" />
+        <Button
+          theme="primary"
+          label="Choose a photo"
+          pickImage={pickImageAsync}
+        />
         <Button label="Use this photo" />
       </View>
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   )
 }
 
@@ -20,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#25292e',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   imageContainer: {
     flex: 1,
