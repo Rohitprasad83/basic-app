@@ -1,4 +1,4 @@
-import { View, Image } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import {
   TapGestureHandler,
   PanGestureHandler,
@@ -9,7 +9,11 @@ import Animated, {
   useAnimatedGestureHandler,
   withSpring,
 } from 'react-native-reanimated'
-export default function EmojiSticker({ imageSize, stickerSource }) {
+export default function EmojiSticker({
+  imageSize,
+  stickerSource,
+  setIsEmojiVisible,
+}) {
   const AnimatedView = Animated.createAnimatedComponent(View)
   const AnimatedImage = Animated.createAnimatedComponent(Image)
   const translateX = useSharedValue(0)
@@ -52,16 +56,19 @@ export default function EmojiSticker({ imageSize, stickerSource }) {
       height: withSpring(scaleImage.value),
     }
   })
+
   return (
     <PanGestureHandler onGestureEvent={onDrag}>
       <AnimatedView style={[containerStyle, { top: -350 }]}>
-        <TapGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>
-          <AnimatedImage
-            source={stickerSource}
-            resizeMode="contain"
-            style={[imageStyle, { width: imageSize, height: imageSize }]}
-          />
-        </TapGestureHandler>
+        <TouchableOpacity onLongPress={() => setIsEmojiVisible(null)}>
+          <TapGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>
+            <AnimatedImage
+              source={stickerSource}
+              resizeMode="contain"
+              style={[imageStyle, { width: imageSize, height: imageSize }]}
+            />
+          </TapGestureHandler>
+        </TouchableOpacity>
       </AnimatedView>
     </PanGestureHandler>
   )

@@ -53,7 +53,11 @@ export default function App() {
           selectedImage={selectedImage}
         />
         {pickedEmoji !== null ? (
-          <EmojiSticker imageSize={40} stickerSource={pickedEmoji} />
+          <EmojiSticker
+            imageSize={40}
+            stickerSource={pickedEmoji}
+            setIsEmojiVisible={setPickedEmoji}
+          />
         ) : null}
       </View>
       {showAppOptions ? (
