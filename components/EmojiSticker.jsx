@@ -60,7 +60,9 @@ export default function EmojiSticker({
   return (
     <PanGestureHandler onGestureEvent={onDrag}>
       <AnimatedView style={[containerStyle, { top: -350 }]}>
-        <TouchableOpacity onLongPress={() => setIsEmojiVisible(null)}>
+        <TouchableOpacity
+          onLongPress={() => setIsEmojiVisible(null)}
+          activeOpacity={1}>
           <TapGestureHandler onGestureEvent={onDoubleTap} numberOfTaps={2}>
             <AnimatedImage
               source={stickerSource}
