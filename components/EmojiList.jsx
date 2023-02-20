@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, FlatList, Pressable } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Pressable,
+  Image,
+} from 'react-native'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { useState } from 'react'
 import EmojiSelector, { Categories } from 'react-native-emoji-selector'
@@ -10,6 +17,7 @@ export default function EmojiList({ onSelect, onCloseModal }) {
     require('../assets/emojis/emoji4.jpeg'),
     require('../assets/emojis/emoji5.jpeg'),
   ])
+
   return (
     <FlatList
       horizontal
